@@ -76,7 +76,6 @@ function App() {
     const state = [...gameState];
     state[column][row] = whichPlayer;
 
-    // Selection history is not storing initial move.
     const moveHistory = selectionHistory;
 
     moveHistory

@@ -1,7 +1,7 @@
 # Connect Four App
 
 ## About
-This is a demo of using React to create an SPA for playing a game of Connect Four against an AI Bot.
+This is a [demo of using React to create an SPA for playing a game of Connect Four against an AI Bot](https://timmarco.com/connect-four).
 
 The app is based on the `create-react-app` template.
 

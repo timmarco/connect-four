@@ -1,0 +1,37 @@
+.headerBar {
+  height:4vh;
+  width:100%;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:2;
+  background-color:white;
+  box-shadow:5px 5px 5px rgba(0,0,0,0.125);
+  text-align:left;
+  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+}
+
+.logo {
+  background-color:black;
+  color:white;
+  padding-left:1em;
+  padding-right:1em;
+  margin-left:1em;
+  margin-right:1em;
+}
+
+.resetButton {
+  background-color:black;
+  color:white;
+  padding-left:1em;
+  padding-right:1em;
+  margin-left:1em;
+  margin-right:1em;
+  cursor:pointer;
+}
+
+.resetButton:hover {
+  background-color:rgb(104,171,87);
+}

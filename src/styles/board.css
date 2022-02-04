@@ -1,0 +1,23 @@
+.connectFourBoard {
+  width:100vw;
+  height:85vh;
+  display:flex;
+  justify-content: space-around;
+  padding-top:5vh;
+}
+
+.boardColumn {
+  float:left;
+  height:100%;
+  width:14%;
+  border:1px solid #aaa;
+  display:flex;
+  flex-direction:column;
+  justify-content: space-around;
+}
+
+.boardSpace {
+  height:16%;
+  background-color:#eee;
+  border:5px solid white;
+}

@@ -1,4 +1,4 @@
-# Connect Four APP
+# Connect Four App
 
 ## About
 This is a demo of using React to create an SPA for playing a game of Connect Four against an AI Bot.

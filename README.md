@@ -1,49 +1,50 @@
-# Connect Four APP
+# Connect Four App Update 2/15/2022
 
 ## About
-This is a demo of using React to create an SPA for playing a game of Connect Four against an AI Bot.
+This is an updated version of the Connect Four SPA on the [main branch](https://github.com/timmarco/connect-four).
 
-The app is based on the `create-react-app` template.
+I've been working on these updates to hone my React skills and improve the overall UX of the initial app.
 
-The primary logic for the app can be found in `src/App.js`.
+## Biggest Changes
 
-## Overview
-Given time constraints to complete, I had to prioritize what I wanted to accomplish in the app. In the time allotted, I was able to:
-1. Connect to the API endpoint in response to user 'moves' (column selections)
-2. Manage the game's state until completion (win, lose, or tie)
-3. Provide user feedback on completion (win, lose, or draw)
-4. Allow the user to reset the game at any point
-5. Add some animations (and bonus animated gifs) upon game completion
+I've updated both the **UX** of the game itself and **improved the code** in several places.
 
-Given more time, I would have expanded on the app to include some additional features and concepts:
-1. For the sake of user experience, I would have like to play up the **narrative aspect** of 'human vs robot' through additional context, copy and images. Too add a little personality to the game, the winning and losing states include some funny images of humans and robots fighting, but additional story development could help bolster this concept.
-2. I would want to further develop **the animation and physics around the physical pieces**. For simplicity, I modeled each 'space' in the Connect Four board as a single React component. This simplified development, but constrained the ability to do things like animating the pieces 'dropping in' to the board when the player makes a move. At the start of the project, I created a sketch of this effect in d3, but didn't have time to incorporate it into the final app:
+## UX
+
+### Game Pieces & Drop Animations
+I wasn't satisfied with the initial user experience, particularly as it relates to the animation around game pieces. Rather than simply *appearing*, I wanted the pieces to *realistically drop* into position, like this:
 (https://github.com/timmarco/connect-four/blob/main/public/physics.gif?raw=true)
-3. I would have like to use the `localStorage` API to **record and visualize the player's history** and plot wins vs. losses against different difficulty levels over time.
-4. Currently, the game always assumes that the human player should make the first move (perhaps we're playing against a particularly polite robot who always defers to their human opponent). With a few small tweaks, I could have **randomized which player goes first in the game**, which may affect the logic and strategy for the players.
-5. Make a more mobile-friendly version of the app. While I have tested the app and confirms that its basic functionality works on an iPhone, my design and development process for this example was explicitly **desktop-first**
-6. Add **robust error handling**. For this exercise, I'm making the dangerous assumption that the API will always return a value upon a request. Obviously, this would be a very bad assumption to make in an actual production environment.
-7. **Test** every part of the app robustly. For this project, I was working alone to create a demo game. Given the time constraints, I cut corners in terms of testing and reliability. In a real environment, especially working with other devs, this would be an unacceptable shortcut.
 
-## Structure
-Fundamentally the app is structure into basic `components` and `overlays`, and some `utility` functions for managing state and validating game completion.
+Rather than displaying an 'H' for *human players* and 'B' for *bots*, I added some simple graphics to help further distinguish the pieces on the board.
 
-The base of the file can be found in `scripts/App.js`. Here, I instantiate the preliminary game state and return the `<Board />` component, along with the `overlays` that will pop up throughout the game's lifecycle.
+I implemented those animations via `d3.transition`, with crude physics for the time and easing of the drops. I also added a small 'clack' animation that plays when the pieces collide with the existing game.
 
-`src/components` holds the JS / JSX files that model the Connect Four game itself:
-- `<Board />`: the board in its entirety
-- `<Colummn />`: the seven selectable columns in the playfield
-- `<Space />`: which represents the individual locations where a piece can be dropped, as well as the selected pieces (via an `<svg/>` element containing `<circle />` and `<text />` children)
-- `<ResetGameButton />` which allows the user to start over at any point
+### Sound
+I added a few sound effects (sourced via [freesound.org](https://www.freesound.org)) to make a more 'game-like' experience. That includes a 'clack' sound when pieces drop in to place, and small themes for winning and losing games.
 
-`src/overlays` holds the JS / JSX files for the UI overlays that happen throughout the game's lifecycle:
-- `<BotThinkingOverlay />` restricts inputs and provides feedback as the app requests a response from the API
-- `<DifficultyOverlay />` pops up at the beginning of the game and prompts the user to select the opponent's difficulty level
-- `<GameOverOverlay />` presents the results of the game to the user
+### Win State Animation
+I made some minor changes to the winning state animation that are a little more physically-realistic.
 
-`src/utils` includes some utility functions and non-react code for the app:
-- `src/utils/gameValidator/` includes the code for finding the pieces in the `gameState` that resulted in a win. This code is executed at the end of the game and is needed to provide animated feedback to show the four (or more) contiguous winning pieces. For ease of testing and validation, this process is broken down into the simplest steps / isolated functions possible
-- `instantiateState.js` creates a 7x6 array used to populate the initial `gameState`
-- `resetSvgs.js` is a utility function for resetting the pieces at the end of a game
-- `sparkDelight.js` uses d3 to create the animations showing the winning pieces at the end of the game by transforming the relevant `<g>` elements and adding animated lines to focus the user's attention
-- `urlConstructor` returns the specific URL at the API endpoint needed for any user move request
+## Code
+Overall, I spend some time refactoring the code in the app to be more *'React-like'*.
+
+### App.js
+Most of the bigger changes can be found in the [root JS file] (https://github.com/timmarco/connect-four/blob/update/src/App.js).
+
+I restructured the functions in the code to be smaller and more manageable. To the extent possible, I extracted non-stateful functionality into the (utils directory) [https://github.com/timmarco/connect-four/tree/update/src/utils] (e.g., game validation, checking for winners, etc.) as more testable, pure functions.
+
+For functionality that is inherently stateful (e.g., logic for displaying overlays), I tried to create the simplest functions possible for readability.
+
+I simplifed the `import` statements at the top by creating a single `utils` module that would be easier to manage.
+
+### Checking for Winners
+Previously, I relied on responses from the API to determine whether the game was over. This worked well enough, but required unnecessary API calls when the *human player* was victorious. To speed games up, and remove unnecessary API calls, the app now checks for a winning state (e.g., four connected tokens) before fetching from the API.
+
+### Space Component
+The ]initial version](https://github.com/timmarco/connect-four/blob/main/src/components/Space.js) of the `<Space />` component was a bit of a mess, with unnecessary local variables and a lot of convoluted imperative logic. I [restructured that component] (https://github.com/timmarco/connect-four/blob/update/src/components/Space.js) to behave in a more typical React manner by:
+
+1. Creating a `ref` to the circle that represents the game piece
+2. Implementing `useEffect` on `props.tokenState` to run animations and change state
+3. Separating the (side effect) presentation and animation logic into distinct, [individual files](https://github.com/timmarco/connect-four/tree/update/src/components/Space)
+
+This allowed both improved user experience (with the drop animations) and a simpler, cleaner component whose display is affected *entirely* by its `props`

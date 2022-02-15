@@ -3,7 +3,7 @@
 ## About
 This is an updated version of the Connect Four SPA on the [main branch](https://github.com/timmarco/connect-four).
 
-This version is live on my site at [https://timmarco.com/connect-four-update] (https://timmarco.com/connect-four-update)
+This version is [live on my site](https://timmarco.com/connect-four-update) at a https://timmarco.com/connect-four-update.
 
 I've been working on these updates to hone my React skills and improve the overall UX of the initial app.
 

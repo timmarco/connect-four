@@ -1,5 +1,16 @@
-function gameOverStateGenerator(results,gameState) {
-  results.forEach((result) => {
+function gameOverStateGenerator(resultObject,gameState) {
+
+  if(resultObject.winner == "tie") {
+    gameState.forEach((column,columnIndex) => {
+      column.forEach((row,rowIndex) => {
+        gameState[columnIndex][rowIndex] = "loser";
+      })
+    });
+
+    return gameState;
+  }
+
+  resultObject.results.forEach((result) => {
     if(result == null) { return };
     gameState[result[0]][result[1]] = "winner";
   });

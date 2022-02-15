@@ -3,11 +3,7 @@ import sounds from '../../utils/sounds.js';
 
 function runClack(group,color) {
 
-  if(sounds.clack !== undefined) {
-    sounds.playClack();
-  } else {
-    console.log("PRELOAD CLACK UNDEFINED");
-  }
+  sounds.playClack();
 
   const lineEnd = (d,i) => {
     return {

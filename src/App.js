@@ -26,7 +26,7 @@ function App() {
   const [waiting,setWaiting] = useState(false);
 
   const gameOver = (resultObject) => {
-    const newState = utils.gameOverStateGenerator(resultObject.results,utils.deepClone(gameState));
+    const newState = utils.gameOverStateGenerator(resultObject,utils.deepClone(gameState));
 
     setTimeout(() => {
       utils.sounds.gameOver(resultObject.winner);

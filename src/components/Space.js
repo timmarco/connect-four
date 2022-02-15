@@ -1,33 +1,39 @@
-import {useState} from 'react';
+import {useEffect,useRef} from 'react';
+import * as d3 from 'd3';
+
+import emptyToken from './Space/emptyToken.js';
+import winningToken from './Space/winningToken.js';
+import botToken from './Space/botToken.js';
+import playerToken from './Space/playerToken.js';
+import losingToken from './Space/losingToken.js';
 
 function Space(props) {
 
-  let fill;
-  let tokenLetter;
-  let isWinningPiece = false;
+  const groupReference = useRef();
 
-  if(props.tokenState == "empty") { fill = "none" }
-  if(props.tokenState == "player") {
-    fill = "blue";
-    tokenLetter="H";
-  }
+  useEffect(() => {
+    // When the piece is dropped
+    const group = d3.select(groupReference.current);
 
-  if(props.tokenState == "bot") {
-    fill = "red";
-    tokenLetter = "B";
-  }
+    switch(props.tokenState) {
+      case "empty":
+        emptyToken(group);
+        break;
+      case "bot":
+        botToken(group,props.row);
+        break;
+      case "player":
+        playerToken(group,props.row);
+        break;
+      case "winner":
+        winningToken(group);
+        break;
+      case "loser":
+        losingToken(group);
+        break;
+    }
+  },[props.tokenState]);
 
-  if(props.tokenState == "playerWinner") {
-    fill = "blue";
-    isWinningPiece = true;
-    tokenLetter = "H";
-  }
-
-  if(props.tokenState == "botWinner") {
-    fill = "red";
-    isWinningPiece = true;
-    tokenLetter = "B";
-  }
 
 
   return (
@@ -47,43 +53,16 @@ function Space(props) {
           "overflow":"visible"
         }}
       >
-        <g className={isWinningPiece == true ? "winningGroup" : "losingGroup"}>
+        <g ref={groupReference}>
           <circle
             r="45"
             cx="50"
             cy="50"
             strokeWidth="2"
-            fill={ fill }
-            className={isWinningPiece == true ? "winningPiece" : "losingPiece"}
-          />
-          <text
-            x="50"
-            y="50"
-            fontFamily="Oswald"
-            fontSize="3em"
             stroke="black"
-            strokeWidth="6"
-            fontWeight="bold"
-            textAnchor="middle"
-            dominantBaseline="middle"
-            className={isWinningPiece == true ? "winningText" : "losingText"}
-          >
-            {tokenLetter}
-          </text>
-
-          <text
-            x="50"
-            y="50"
-            fontFamily="Oswald"
-            fontSize="3em"
-            fill="white"
-            fontWeight="bold"
-            textAnchor="middle"
-            dominantBaseline="middle"
-            className={isWinningPiece == true ? "winningText" : "losingText"}
-          >
-            {tokenLetter}
-          </text>
+            fill="none"
+          />
+          <path />
         </g>
       </svg>
 

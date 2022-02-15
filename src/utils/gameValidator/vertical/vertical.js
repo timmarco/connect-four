@@ -1,19 +1,17 @@
+import above from './above.js';
+import below from './below.js';
+
 function vertical(gameState,columnIndex,rowIndex,winner) {
-  let matches = [[columnIndex,rowIndex]];
+  let matches = null;
 
-  if(rowIndex > 1) { return null }
-  while(true) {
-    if(rowIndex == 0) { break }
-    if(gameState[columnIndex][rowIndex + 1] == winner) {
-      rowIndex += 1;
-      matches
-        .push([columnIndex,rowIndex]);
-    } else {
-      break;
-    }
-  }
+  const checkAbove = above(gameState,columnIndex,rowIndex,winner);
+  const checkBelow = below(gameState,columnIndex,rowIndex,winner);
 
-  if(matches.length > 3) { return matches; }
+  const fullLine = checkAbove
+    .concat([[columnIndex,rowIndex]])
+    .concat(checkBelow);
+
+  if(fullLine.length > 3) { return fullLine; }
 
   return [];
 

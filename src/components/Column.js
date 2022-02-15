@@ -51,6 +51,7 @@ function Column(props) {
             tokenState={space}
             highlighted={isHighlighted}
             active={index == activeSpace}
+            row={index}
           />
         })
     }

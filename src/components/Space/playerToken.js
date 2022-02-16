@@ -2,7 +2,8 @@ import * as d3 from 'd3';
 import dropToken from './dropToken.js';
 import paths from './tokenPaths.js';
 
-function playerToken(group,row,sounds) {
+function playerToken(groupReference,row,sounds) {
+  const group = d3.select(groupReference.current);
 
   dropToken(group,row,"blue",sounds);
 

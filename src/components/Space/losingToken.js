@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 
-function losingToken(group) {
+function losingToken(groupReference) {
+  const group = d3.select(groupReference.current);
 
   group
     .attr("opacity",1)

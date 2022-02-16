@@ -1,39 +1,13 @@
 import {useEffect,useRef} from 'react';
-import * as d3 from 'd3';
-
-import emptyToken from './Space/emptyToken.js';
-import winningToken from './Space/winningToken.js';
-import botToken from './Space/botToken.js';
-import playerToken from './Space/playerToken.js';
-import losingToken from './Space/losingToken.js';
+import handleTokenState from './handleTokenState.js';
 
 function Space(props) {
 
   const groupReference = useRef();
 
   useEffect(() => {
-    // When the piece is dropped
-    const group = d3.select(groupReference.current);
-
-    switch(props.tokenState) {
-      case "empty":
-        emptyToken(group);
-        break;
-      case "bot":
-        botToken(group,props.row);
-        break;
-      case "player":
-        playerToken(group,props.row);
-        break;
-      case "winner":
-        winningToken(group);
-        break;
-      case "loser":
-        losingToken(group);
-        break;
-    }
+    handleTokenState(groupReference,props);
   },[props.tokenState]);
-
 
 
   return (

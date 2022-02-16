@@ -1,7 +1,8 @@
 import * as d3 from 'd3';
 import runCrown from './runCrown.js';
 
-function winningToken(group) {
+function winningToken(groupReference) {
+  const group = d3.select(groupReference.current);
 
   group
     .attr("display","block");

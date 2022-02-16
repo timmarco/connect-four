@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import Space from "./Space.js";
+import Space from "../Space/Space.js";
 
 function Column(props) {
 

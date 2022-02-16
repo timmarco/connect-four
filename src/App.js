@@ -7,13 +7,13 @@ import './styles/header.css';
 
 import * as utils from './utils/utils.js';
 
-import Board from './components/Board.js';
-import ResetGameButton from './components/ResetGameButton.js';
+import Board from './components/Board/Board.js';
+import Header from './components/Header/Header.js';
 
-import BotThinkingOverlay from './overlays/BotThinkingOverlay.js';
-import DifficultyOverlay from './overlays/DifficultyOverlay.js';
-import GameOverOverlay from './overlays/GameOverOverlay.js';
-import StartGameOverlay from './overlays/StartGameOverlay.js';
+import BotThinkingOverlay from './overlays/BotThinking/BotThinkingOverlay.js';
+import DifficultyOverlay from './overlays/Difficulty/DifficultyOverlay.js';
+import GameOverOverlay from './overlays/GameOver/GameOverOverlay.js';
+import StartGameOverlay from './overlays/StartGame/StartGameOverlay.js';
 
 function App() {
 
@@ -105,29 +105,12 @@ function App() {
         selectionCallback={selectionMade}
       />
 
-      <div className='headerBar'>
-        <div className="logo">
-          CONNECT FOUR
-        </div>
-        <ResetGameButton
-          clickHandler={resetGame}
-        />
-      </div>
+      <Header reset={resetGame} />
 
-      <BotThinkingOverlay
-        waiting={waiting}
-      />
+      { waiting == true && <BotThinkingOverlay /> }
+      { difficulty === undefined && <DifficultyOverlay click={setDifficulty } /> }
+      { gameIsOver == true && <GameOverOverlay winner={gameWinner} reset={resetGame} /> }
 
-      <DifficultyOverlay
-        visible={difficulty}
-        click={setDifficulty}
-      />
-
-      <GameOverOverlay
-        visible={gameIsOver}
-        winner={gameWinner}
-        reset={resetGame}
-      />
     </div>
   );
 }
